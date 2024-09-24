@@ -1,0 +1,28 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="content">
+    <h3>Home</h3>
+</div>
+<script type="text/javascript">
+    document.querySelectorAll('a').forEach(el =>
+    {
+        el.addEventListener('click', (event) => {
+            const linkEl = event.target;
+
+            event.preventDefault();
+
+            navigate(linkEl);
+        });
+    });
+
+    function navigate(linkEl) {
+        const contentElement = document.querySelector('#content');
+        $('#content').load(linkEl.href);
+    }
+
+    function clickElByHref(link) {
+        navigate(document.querySelector(`.nav-item a[href="${link}"]`));
+    }
+</script>
