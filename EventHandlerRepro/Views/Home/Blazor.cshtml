@@ -2,8 +2,6 @@
 @{
     Layout = null;
 }
-<base href="/" />
-<script src="_framework/blazor.server.js"></script>
 
 <div id="content">
     <h3>Blazor</h3>
@@ -13,11 +11,14 @@
 
 <script type="text/javascript">
     console.info('debug point');
-    window.loadBlazor = async (component, params) => {
+    @*window.loadBlazor = async (component, params) => {
         if (window.blazorComponent != null) {
             await window.blazorComponent.dispose();
         }
         window.blazorComponent = await Blazor.rootComponents.add(document.getElementById('blazor'), 'home', {});
-    };
+    };*@
+    (async function() {
+        window.blazorComponent = await Blazor.rootComponents.add(document.getElementById('blazor'), 'home', {});
+        })();
 
 </script>

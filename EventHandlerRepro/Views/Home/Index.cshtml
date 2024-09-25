@@ -2,6 +2,9 @@
     ViewData["Title"] = "Home Page";
 }
 
+<base href="/" />
+<script src="_framework/blazor.server.js"></script>
+
 <div id="content">
     <h3>Home</h3>
 </div>
@@ -19,15 +22,15 @@
         });
     });
 
-    function navigate(linkEl) {
+    async function navigate(linkEl) {
+        if (window.blazorComponent) {
+            await window.blazorComponent.dispose();
+        }
         const contentElement = document.querySelector('#content');
         $('#content').empty().load(linkEl.href);
     }
 
     async function clickElByHref(link) {
-        if (window.blazorComponent) {
-            await window.blazorComponent.dispose();
-        }
         navigate(document.querySelector(`.nav-item a[href="${link}"]`));
     }
     

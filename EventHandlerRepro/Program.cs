@@ -13,7 +13,7 @@ public class Program
         builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
         builder.Services.AddServerSideBlazor(options =>
         {
-            options.RootComponents.RegisterForJavaScript<Home>("home", "loadBlazor");
+            options.RootComponents.RegisterForJavaScript<Home>("home");
             options.DetailedErrors = true;
         });
 
