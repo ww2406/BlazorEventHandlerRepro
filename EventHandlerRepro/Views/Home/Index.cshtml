@@ -10,19 +10,28 @@
     {
         el.addEventListener('click', (event) => {
             const linkEl = event.target;
+            
+            if (linkEl.id !== 'noJquery') {
+                event.preventDefault();
 
-            event.preventDefault();
-
-            navigate(linkEl);
+                navigate(linkEl);
+            }
         });
     });
 
     function navigate(linkEl) {
         const contentElement = document.querySelector('#content');
-        $('#content').load(linkEl.href);
+        $('#content').empty().load(linkEl.href);
     }
 
-    function clickElByHref(link) {
+    async function clickElByHref(link) {
+        if (window.blazorComponent) {
+            await window.blazorComponent.dispose();
+        }
         navigate(document.querySelector(`.nav-item a[href="${link}"]`));
+    }
+    
+    function logMessage() {
+        console.log('logging message');
     }
 </script>

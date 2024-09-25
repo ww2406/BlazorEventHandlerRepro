@@ -1,6 +1,9 @@
 ﻿@page "/"
+@using System.Timers
 
 @inject IJSRuntime JS
+
+@implements IDisposable
 
 <PageTitle>Home</PageTitle>
 
@@ -12,9 +15,38 @@ Welcome to your new app.
 
 @code {
 
+    private System.Timers.Timer _timer;
+
+    protected override Task OnInitializedAsync()
+    {
+        _timer = new Timer(TimeSpan.FromSeconds(3));
+
+        _timer.Elapsed += async (_, _) =>
+        {
+            try
+            {
+                await JS.InvokeVoidAsync("logMessage");
+            }
+            catch (Exception e)
+            {
+                // ignored
+            }
+        };
+
+        _timer.Start();
+
+        return Task.CompletedTask;
+    }
+
     public async Task Navigate()
     {
         await JS.InvokeVoidAsync("clickElByHref", ["/Home/Privacy"]);
+    }
+
+    public void Dispose()
+    {
+        Console.WriteLine("Disposing...");
+        _timer.Dispose();
     }
 
 }
